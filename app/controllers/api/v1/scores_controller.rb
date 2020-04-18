@@ -1,0 +1,20 @@
+class Api::V1::ScoresController < ApplicationController
+  def index
+    render json: Scores.high_scores
+  end
+
+  def create
+    if Score.create!(score_params)
+      render json: Scores.high_scores
+    else
+      # ToDo: handle error
+      render json: ''
+    end
+  end
+
+  private
+
+  def score_params
+    params.permit(:name, :word_count)
+  end
+end

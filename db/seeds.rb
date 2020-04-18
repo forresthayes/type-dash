@@ -3,5 +3,11 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+names = %w(Amir Betty Cindy)
+
+names.each do |name|
+  Score.create!(
+    name: name,
+    word_count: rand(1..100)
+    )
+end
