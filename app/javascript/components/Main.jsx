@@ -84,6 +84,7 @@ export default () => {
                 ref={inputEl}
                 onChange={({ target }) => setText(target.value)}
                 value={text}
+                style={{ paddingLeft: "1.2rem" }}
               />
               <WarningModal isActive={pasteWarning}></WarningModal>
             </Field>
