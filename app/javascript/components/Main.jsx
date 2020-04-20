@@ -17,7 +17,7 @@ export default () => {
   const [prompt, setPrompt] = useState("Sonnet 29 by William Shakespeare")
   const START_TIME = 500
   const [text, setText] = useState('')
-  const [wordCount, setWordCount] = useState(0)
+  const [wPM, setWPM] = useState(0)
   const [isTimeRunning, setIsTimeRunning] = useState(false)
   const [timeRemaining, setTimeRemaining] = useState(START_TIME)
   const inputEl = useRef(null)
@@ -43,9 +43,23 @@ export default () => {
   useEffect(() => startButton.current.focus(), [])
 
   useEffect(() => {
-    const countWords = (text) => {
-      const wordCount = text.trim().split(/\s+/).filter(str => str !== '').length
-      setWordCount(wordCount)
+    const countWPM = (text) => {
+      const [line1, _, line2] = prompt.props.children
+      const promptText = [line1, line2].join('\n')
+      const promptWords = promptText.split(/\s/)
+      const charCount = text.split('').length
+      const wordsTyped = text.trim().split(/\s/)
+
+      let errors = 0
+      wordsTyped.forEach((word, i) => {
+        if (word !== promptWords[i]) {
+          errors += 1
+        }
+      })
+
+      const WPM = Math.floor(((charCount / 5) - errors) / (START_TIME * 15 / 1000 / 60))
+
+      setWPM(WPM)
     }
 
     if (isTimeRunning && timeRemaining > 0) {
@@ -59,7 +73,7 @@ export default () => {
     } else if (timeRemaining === 0) {
       setIsTimeRunning(false)
       inputEl.current.onpaste = e => null
-      countWords(inputEl.current.value)
+      countWPM(inputEl.current.value)
     } else {
       startButton.current.focus()
     }
@@ -94,8 +108,13 @@ export default () => {
               max={START_TIME}
               style={{ transform: `rotate(0.5turn)` }} />
             <Section style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <button className="button is-large is-success" ref={startButton} onClick={startGame} disabled={isTimeRunning || timeRemaining < START_TIME}>START</button>
-              <span className="is-size-4">WORDS: {wordCount}</span>
+              <button
+                className="button is-large is-success"
+                ref={startButton}
+                onClick={startGame}
+                disabled={isTimeRunning || timeRemaining < START_TIME}
+              >START</button>
+              <span className="is-size-4">WPM: {wPM}</span>
             </Section>
           </Column>
         </Columns>
