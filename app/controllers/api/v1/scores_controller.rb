@@ -15,6 +15,6 @@ class Api::V1::ScoresController < ApplicationController
   private
 
   def score_params
-    params.permit(:name, :word_count)
+    params.permit(:name, :wpm)
   end
 end

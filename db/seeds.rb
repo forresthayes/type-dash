@@ -8,6 +8,6 @@ names = %w(Amir Betty Cindy)
 names.each do |name|
   Score.create!(
     name: name,
-    word_count: rand(1..100)
+    wpm: rand(1..100)
     )
 end
