@@ -1,4 +1,6 @@
 class Api::V1::ScoresController < ApplicationController
+  protect_from_forgery with: :null_session
+
   def index
     render json: Score.high_scores
   end
@@ -15,6 +17,6 @@ class Api::V1::ScoresController < ApplicationController
   private
 
   def score_params
-    params.permit(:name, :wpm)
+    params.require(:score).permit(:name, :wpm)
   end
 end
