@@ -44,8 +44,6 @@ export default () => {
     }
   }
 
-  useEffect(() => startButton.current.focus(), [])
-
   useEffect(() => {
     const countWPM = (text) => {
       const [line1, _, line2] = prompt.props.children
