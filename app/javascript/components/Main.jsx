@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { testPrompt } from '../helpers'
+import { prompter } from '../helpers'
 import 'bulma/css/bulma.css'
 import WarningModal from './WarningModal'
 import {
@@ -8,22 +8,26 @@ import {
   Columns,
   Box,
   Field,
-  Section,
+  Section
 } from 'bloomer'
 
 
 export default () => {
-  const [promptGen, setPromptGen] = useState(testPrompt())
-  const [prompt, setPrompt] = useState("Sonnet 29 by William Shakespeare")
-  const START_TIME = 500
+  const timeLimit = 5 // seconds
+  // Progress intervals calibrate progress bar animation.
+  const progressUpdateInterval = 15 // milliseconds
+  const progressResetInterval = 2 // ms
+  const maxTime = Math.floor(timeLimit * 1000 / progressUpdateInterval)
+
+  const [prompt, setPrompt] = useState(<p>Sonnet 29<br />by William Shakespeare</p>)
+  const [promptGen, setPromptGen] = useState(prompter())
   const [text, setText] = useState('')
-  const [wPM, setWPM] = useState(0)
+  const [WPM, setWPM] = useState(0)
   const [isTimeRunning, setIsTimeRunning] = useState(false)
-  const [timeRemaining, setTimeRemaining] = useState(START_TIME)
+  const [timeRemaining, setTimeRemaining] = useState(maxTime)
+  const [pasteWarning, setPasteWarning] = useState(false)
   const inputEl = useRef(null)
   const startButton = useRef(null)
-  const promptRef = useRef(null)
-  const [pasteWarning, setPasteWarning] = useState(false)
 
   const startGame = () => {
     setPrompt(promptGen.next().value)
@@ -47,7 +51,7 @@ export default () => {
       const [line1, _, line2] = prompt.props.children
       const promptText = [line1, line2].join('\n')
       const promptWords = promptText.split(/\s/)
-      const charCount = text.split('').length
+      const charsTyped = text.split('').length
       const wordsTyped = text.trim().split(/\s/)
 
       let errors = 0
@@ -57,19 +61,18 @@ export default () => {
         }
       })
 
-      const WPM = Math.floor(((charCount / 5) - errors) / (START_TIME * 15 / 1000 / 60))
-
-      setWPM(WPM)
+      const netWPM = Math.floor(((charsTyped / 5) - errors) / (timeLimit / 60))
+      setWPM(netWPM > 0 ? netWPM : 0)
     }
 
     if (isTimeRunning && timeRemaining > 0) {
       setTimeout(() => {
         setTimeRemaining(time => time - 1)
-      }, 15)
-    } else if (!isTimeRunning && timeRemaining < START_TIME) {
+      }, progressUpdateInterval)
+    } else if (!isTimeRunning && timeRemaining < maxTime) {
       setTimeout(() => {
-        setTimeRemaining(time => time + 5)
-      }, 2)
+        setTimeRemaining(time => time + 2)
+      }, progressResetInterval)
     } else if (timeRemaining === 0) {
       setIsTimeRunning(false)
       inputEl.current.onpaste = e => null
@@ -80,8 +83,7 @@ export default () => {
 
   }, [timeRemaining, isTimeRunning])
 
-  const progressBarColor = (!isTimeRunning && timeRemaining < START_TIME) ? '' : 'is-info'
-
+  const progressBarColor = (!isTimeRunning && timeRemaining < maxTime) ? '' : 'is-info'
 
   return (
     <Section>
@@ -105,16 +107,16 @@ export default () => {
             <progress
               className={`progress is-small ${progressBarColor}`}
               value={timeRemaining}
-              max={START_TIME}
+              max={maxTime}
               style={{ transform: `rotate(0.5turn)` }} />
             <Section style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <button
                 className="button is-large is-success"
                 ref={startButton}
                 onClick={startGame}
-                disabled={isTimeRunning || timeRemaining < START_TIME}
+                disabled={isTimeRunning || timeRemaining < maxTime}
               >START</button>
-              <span className="is-size-4">WPM: {wPM}</span>
+              <span className="is-size-4">WPM: {WPM}</span>
             </Section>
           </Column>
         </Columns>

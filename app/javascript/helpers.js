@@ -28,7 +28,7 @@ const prompts = couplets.map(couplet => {
   return <p>{line1}<br />{line2}</p>
 })
 
-export function* testPrompt() {
+export function* prompter() {
   let i = 0
   while (true) {
     yield prompts[i]
