@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { prompter } from '../helpers'
 import 'bulma/css/bulma.css'
 import WarningModal from './WarningModal'
+import WinnerModal from './WinnerModal'
 import {
   Container,
   Column,
@@ -12,7 +13,7 @@ import {
 } from 'bloomer'
 
 
-export default () => {
+export default ({ goal, setScores }) => {
   const timeLimit = 5 // seconds
   // Progress intervals calibrate progress bar animation.
   const progressUpdateInterval = 15 // milliseconds
@@ -26,6 +27,7 @@ export default () => {
   const [isTimeRunning, setIsTimeRunning] = useState(false)
   const [timeRemaining, setTimeRemaining] = useState(maxTime)
   const [pasteWarning, setPasteWarning] = useState(false)
+  const [isWinner, setIsWinner] = useState(false)
   const inputEl = useRef(null)
   const startButton = useRef(null)
 
@@ -45,6 +47,10 @@ export default () => {
   }
 
   useEffect(() => {
+    const recordHighScore = score => {
+      setIsWinner(isWinner => !isWinner)
+    }
+
     const countWPM = (text) => {
       const [line1, _, line2] = prompt.props.children
       const promptText = [line1, line2].join('\n')
@@ -59,8 +65,17 @@ export default () => {
         }
       })
 
-      const netWPM = Math.floor(((charsTyped / 5) - errors) / (timeLimit / 60))
-      setWPM(netWPM > 0 ? netWPM : 0)
+      const grossWPM = charsTyped / 5
+      let netWPM = 0
+      if (grossWPM > errors) {
+        netWPM = Math.floor((grossWPM - errors) / (timeLimit / 60))
+      }
+
+      setWPM(netWPM)
+
+      if (netWPM > goal) {
+        recordHighScore(netWPM)
+      }
     }
 
     if (isTimeRunning && timeRemaining > 0) {
@@ -101,6 +116,12 @@ export default () => {
                 style={{ paddingLeft: "1.2rem" }}
               />
               <WarningModal isActive={pasteWarning}></WarningModal>
+              <WinnerModal
+                isActive={isWinner}
+                wpm={WPM}
+                setIsWinner={setIsWinner}
+                setScores={setScores}
+              ></WinnerModal>
             </Field>
             <progress
               className={`progress is-small ${progressBarColor}`}

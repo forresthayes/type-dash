@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import 'bulma/css/bulma.css'
 import Header from './Header'
 import Main from './Main'
-// import Scores from './Scores'
 
 function App() {
 
@@ -18,22 +17,21 @@ function App() {
         throw new Error("We have a problem.")
       })
       .then(data => {
-        console.log(data)
         setScores(data)
       })
       .catch((reason) => console.error(reason.message))
   }, [])
 
-  // const scoreToBeat = scores.reduce((min, score) => )
+  const scoreToBeat = Math.min(...scores.map(({ wpm }) => wpm))
 
   const highScores = scores.map(
-    ({ name, wpm }) => <p key={name}>{name} WPM: {wpm}</p>
+    ({ name, wpm }, i) => <p key={i}>{name} WPM: {wpm}</p>
   )
 
   return (
     <>
       <Header />
-      <Main />
+      <Main goal={scoreToBeat} setScores={setScores} />
       {highScores}
     </>
   );
