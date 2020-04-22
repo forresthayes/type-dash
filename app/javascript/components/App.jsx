@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import 'bulma/css/bulma.css'
 import Header from './Header'
 import Main from './Main'
@@ -30,9 +31,17 @@ function App() {
 
   return (
     <>
-      <Header />
-      <Main goal={scoreToBeat} setScores={setScores} />
-      {highScores}
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Main goal={scoreToBeat} setScores={setScores} />
+          </Route>
+          <Route path="/high-scores">
+            {highScores}
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }
