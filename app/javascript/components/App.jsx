@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import 'bulma/css/bulma.css'
 import Header from './Header'
 import Main from './Main'
+import Scoreboard from './Scoreboard'
 
 function App() {
 
@@ -25,10 +26,6 @@ function App() {
 
   const scoreToBeat = Math.min(...scores.map(({ wpm }) => wpm))
 
-  const highScores = scores.map(
-    ({ name, wpm }, i) => <p key={i}>{name} WPM: {wpm}</p>
-  )
-
   return (
     <>
       <Router>
@@ -38,7 +35,7 @@ function App() {
             <Main goal={scoreToBeat} setScores={setScores} />
           </Route>
           <Route path="/high-scores">
-            {highScores}
+            <Scoreboard scores={scores} />
           </Route>
         </Switch>
       </Router>
@@ -47,3 +44,4 @@ function App() {
 }
 
 export default App
+
