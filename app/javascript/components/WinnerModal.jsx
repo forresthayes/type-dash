@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import 'bulma/css/bulma.css'
 import 'bulma-modal-fx/dist/css/modal-fx.min.css'
 import { Box, Modal, ModalBackground, ModalContent, Field, Label, Control, Input, Button } from 'bloomer'
@@ -7,6 +8,7 @@ import { Box, Modal, ModalBackground, ModalContent, Field, Label, Control, Input
 export default ({ isActive, wpm, setScores, setIsWinner }) => {
   const [name, setName] = useState('')
   const handleChange = ({ target }) => setName(target.value)
+  const history = useHistory()
 
   const handleClick = () => {
     setIsWinner(false)
@@ -21,14 +23,14 @@ export default ({ isActive, wpm, setScores, setIsWinner }) => {
         console.log(data)
         setScores(data)
       })
+    history.push("/high-scores")
   }
 
   return (
-    <Modal isActive={isActive} className="modal-fx-fadeInScale">
+    <Modal isActive={isActive} className="modal-fx-fadeInScale" >
       <ModalBackground />
       <ModalContent>
         <Box>
-
           <Field>
             <Label>Name</Label>
             <Control>
@@ -45,6 +47,6 @@ export default ({ isActive, wpm, setScores, setIsWinner }) => {
           </Field>
         </Box>
       </ModalContent>
-    </Modal>
+    </Modal >
   )
 }
