@@ -10,7 +10,7 @@ export default ({ scores }) => {
     highScores = scores.map(
       ({ name, wpm }, i) => (
         <tr key={i} className={i === latestScoreIndex ? 'is-selected' : undefined}>
-          <td>{name}</td>
+          <td className="is-capitalized">{name}</td>
           <td>{wpm}</td>
         </tr >
       )
