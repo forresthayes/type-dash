@@ -9,7 +9,7 @@ export default ({ scores }) => {
     const latestScoreIndex = scores.findIndex(score => score === latestScore)
     highScores = scores.map(
       ({ name, wpm }, i) => (
-        <tr key={i} className={i === latestScoreIndex && 'is-selected'}>
+        <tr key={i} className={i === latestScoreIndex ? 'is-selected' : undefined}>
           <td>{name}</td>
           <td>{wpm}</td>
         </tr >
