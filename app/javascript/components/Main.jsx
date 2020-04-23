@@ -30,6 +30,7 @@ export default ({ goal, setScores }) => {
   const [isWinner, setIsWinner] = useState(false)
   const inputEl = useRef(null)
   const startButton = useRef(null)
+  const winnerNameInput = useRef(null)
 
   const startGame = () => {
     setPrompt(promptGen.next().value)
@@ -87,6 +88,8 @@ export default ({ goal, setScores }) => {
       setIsTimeRunning(false)
       inputEl.current.onpaste = e => null
       countWPM(inputEl.current.value)
+    } else if (isWinner) {
+      winnerNameInput.current.focus()
     } else {
       startButton.current.focus()
     }
@@ -118,6 +121,7 @@ export default ({ goal, setScores }) => {
                 wpm={WPM}
                 setIsWinner={setIsWinner}
                 setScores={setScores}
+                ref={winnerNameInput}
               ></WinnerModal>
             </Field>
             <progress

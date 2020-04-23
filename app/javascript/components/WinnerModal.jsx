@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import 'bulma/css/bulma.css'
 import 'bulma-modal-fx/dist/css/modal-fx.min.css'
-import { Box, Modal, ModalBackground, ModalContent, Field, Label, Control, Input, Button } from 'bloomer'
+import { Box, Modal, ModalBackground, ModalContent, Field, Label, Control, Button } from 'bloomer'
 
 
-export default ({ isActive, wpm, setScores, setIsWinner }) => {
+export default React.forwardRef(({ isActive, wpm, setScores, setIsWinner }, ref) => {
   const [name, setName] = useState('')
   const handleChange = ({ target }) => setName(target.value)
   const history = useHistory()
@@ -34,7 +34,7 @@ export default ({ isActive, wpm, setScores, setIsWinner }) => {
           <Field>
             <Label>Name</Label>
             <Control>
-              <Input type="text" name="name" onChange={handleChange} />
+              <input ref={ref} className="input" type="text" name="name" onChange={handleChange} />
             </Control>
           </Field>
           <Field isGrouped>
@@ -49,4 +49,4 @@ export default ({ isActive, wpm, setScores, setIsWinner }) => {
       </ModalContent>
     </Modal >
   )
-}
+})
