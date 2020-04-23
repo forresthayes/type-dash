@@ -47,9 +47,6 @@ export default ({ goal, setScores }) => {
   }
 
   useEffect(() => {
-    const recordHighScore = score => {
-      setIsWinner(isWinner => !isWinner)
-    }
 
     const countWPM = (text) => {
       const [line1, _, line2] = prompt.props.children
@@ -74,7 +71,7 @@ export default ({ goal, setScores }) => {
       setWPM(netWPM)
 
       if (netWPM > goal) {
-        recordHighScore(netWPM)
+        setIsWinner(true)
       }
     }
 
