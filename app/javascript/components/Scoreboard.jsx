@@ -3,7 +3,7 @@ import 'bulma/css/bulma.css'
 import { Section, Container, Columns, Column, Box, Table } from 'bloomer'
 
 export default ({ scores }) => {
-  let highScores
+  let scoreboardRows
   if (scores.length !== 0) {
     const latestScore = scores.reduce((acc, score) => score.created_at > acc.created_at ? score : acc)
     const latestScoreIndex = scores.findIndex(score => score === latestScore)

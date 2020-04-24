@@ -48,27 +48,25 @@ export default ({ goal, setScores }) => {
       const [line1, _, line2] = prompt.props.children
       const promptText = [line1, line2].join('\n')
       const promptWords = promptText.split(/\s/)
-      const charsTyped = text.split('').length
       const wordsTyped = text.trim().split(/\s/)
 
-      let errors = 0
+      let correctWords = 0
       wordsTyped.forEach((word, i) => {
-        if (word !== promptWords[i]) {
-          errors += 1
+        if (word === promptWords[i]) {
+          correctWords += 1
         }
       })
 
-      const grossWPM = charsTyped / 5
-      let netWPM = 0
-      if (grossWPM > errors) {
-        netWPM = Math.floor((grossWPM - errors) / (timeLimit / 60))
-      }
+      const netWPM = Math.floor(correctWords / (timeLimit / 60))
 
       setWPM(netWPM)
 
       if (netWPM > goal) {
         setConfetti(true)
-        setTimeout(() => setIsWinner(true), 2500)
+        setTimeout(() => setIsWinner(true), 2000)
+        setTimeout(() => winnerNameInput.current.focus(), 2100)
+      } else {
+        setTimeout(() => startButton.current.focus(), 1000)
       }
     }
 
@@ -84,10 +82,6 @@ export default ({ goal, setScores }) => {
       setIsTimeRunning(false)
       inputEl.current.onpaste = e => null
       countWPM(inputEl.current.value)
-    } else if (isWinner) {
-      winnerNameInput.current.focus()
-    } else {
-      startButton.current.focus()
     }
 
   }, [timeRemaining, isTimeRunning])
@@ -138,6 +132,7 @@ export default ({ goal, setScores }) => {
                 ref={startButton}
                 onClick={startGame}
                 disabled={isTimeRunning || timeRemaining < maxTime}
+                autoFocus={true}
               >START</button>
               <span className="is-size-4">WPM: {WPM}</span>
             </Section>
