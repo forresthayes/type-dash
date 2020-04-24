@@ -3,14 +3,8 @@ import { prompter } from '../helpers'
 import 'bulma/css/bulma.css'
 import WarningModal from './WarningModal'
 import WinnerModal from './WinnerModal'
-import {
-  Container,
-  Column,
-  Columns,
-  Box,
-  Field,
-  Section
-} from 'bloomer'
+import { Container, Column, Columns, Box, Field, Section, Modal } from 'bloomer'
+import Confetti from 'react-dom-confetti';
 
 
 export default ({ goal, setScores }) => {
@@ -28,6 +22,7 @@ export default ({ goal, setScores }) => {
   const [timeRemaining, setTimeRemaining] = useState(maxTime)
   const [pasteWarning, setPasteWarning] = useState(false)
   const [isWinner, setIsWinner] = useState(false)
+  const [confetti, setConfetti] = useState(false)
   const inputEl = useRef(null)
   const startButton = useRef(null)
   const winnerNameInput = useRef(null)
@@ -72,7 +67,8 @@ export default ({ goal, setScores }) => {
       setWPM(netWPM)
 
       if (netWPM > goal) {
-        setIsWinner(true)
+        setConfetti(true)
+        setTimeout(() => setIsWinner(true), 2500)
       }
     }
 
@@ -101,6 +97,13 @@ export default ({ goal, setScores }) => {
   return (
     <Section>
       <Container>
+        <Modal>
+          <Columns isCentered>
+            <Column isOffset="1/2">
+              <Confetti active={confetti} config={{ duration: 3000 }} />
+            </Column>
+          </Columns>
+        </Modal>
         <Columns isCentered>
           <Column isSize="1/2">
             <Box className="is-size-5">
