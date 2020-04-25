@@ -3,7 +3,7 @@ import { prompter } from '../helpers'
 import 'bulma/css/bulma.css'
 import WarningModal from './WarningModal'
 import WinnerModal from './WinnerModal'
-import { Container, Column, Columns, Box, Field, Section, Modal, Button } from 'bloomer'
+import { Container, Content, Column, Columns, Box, Field, Section, Modal, Button } from 'bloomer'
 import Confetti from 'react-dom-confetti';
 
 
@@ -14,7 +14,7 @@ export default ({ goal, setScores }) => {
   const progressResetInterval = 2 // ms
   const maxTime = Math.floor(timeLimit * 1000 / progressUpdateInterval)
 
-  const [prompt, setPrompt] = useState(<p>Sonnet 29<br />by William Shakespeare</p>)
+  const [prompt, setPrompt] = useState('')
   const [promptGen, setPromptGen] = useState(prompter())
   const [text, setText] = useState('')
   const [WPM, setWPM] = useState(0)
@@ -99,8 +99,11 @@ export default ({ goal, setScores }) => {
           </Columns>
         </Modal>
         <Columns isCentered>
-          <Column isSize="1/2" style={{ padding: "0" }}>
-            <Box className="is-size-5">
+          <Column isSize="1/2">
+            <Content>
+              <p>Press START and try your hand at Sonnet 29 by William Shakespeare.</p>
+            </Content>
+            <Box className="is-size-5" style={{ height: "6rem" }}>
               {prompt}
             </Box>
             <Field>
