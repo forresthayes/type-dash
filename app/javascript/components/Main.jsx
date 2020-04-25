@@ -3,7 +3,7 @@ import { prompter } from '../helpers'
 import 'bulma/css/bulma.css'
 import WarningModal from './WarningModal'
 import WinnerModal from './WinnerModal'
-import { Container, Column, Columns, Box, Field, Section, Modal } from 'bloomer'
+import { Container, Column, Columns, Box, Field, Section, Modal, Button } from 'bloomer'
 import Confetti from 'react-dom-confetti';
 
 
@@ -99,7 +99,7 @@ export default ({ goal, setScores }) => {
           </Columns>
         </Modal>
         <Columns isCentered>
-          <Column isSize="1/2">
+          <Column isSize="1/2" style={{ padding: "0" }}>
             <Box className="is-size-5">
               {prompt}
             </Box>
