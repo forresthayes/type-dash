@@ -4,5 +4,5 @@ class Score < ApplicationRecord
     only_integer: true, greater_than_or_equal_to: 0
   }
 
-  scope :high_scores, -> { order(wpm: :desc).limit(10) }
+  scope :high_scores, -> { order(wpm: :desc, created_at: :asc).limit(10) }
 end
