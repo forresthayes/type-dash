@@ -7,7 +7,7 @@ import { Container, Content, Column, Columns, Box, Field, Section, Modal, Button
 import Confetti from 'react-dom-confetti';
 
 
-export default ({ goal, setScores, promptIndex, setPromptIndex }) => {
+export default ({ goal, setScores, promptIndex, setPromptIndex, setHighlightLatestScore }) => {
   const timeLimit = 5 // seconds
   // Progress intervals calibrate progress bar animation.
   const progressUpdateInterval = 15 // milliseconds
@@ -30,6 +30,7 @@ export default ({ goal, setScores, promptIndex, setPromptIndex }) => {
     inputEl.current.disabled = false
     setText('')
     inputEl.current.focus()
+    setHighlightLatestScore(false)
     inputEl.current.onpaste = e => {
       e.preventDefault()
       setPasteWarning(true)
@@ -60,6 +61,7 @@ export default ({ goal, setScores, promptIndex, setPromptIndex }) => {
       if (netWPM > goal) {
         setConfetti(true)
         setTimeout(() => setIsWinner(true), 2000)
+        setHighlightLatestScore(true)
         setTimeout(() => winnerNameInput.current.focus(), 2100)
       } else {
         setTimeout(() => startButton.current.focus(), 1000)

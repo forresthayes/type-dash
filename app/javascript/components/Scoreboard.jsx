@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import 'bulma/css/bulma.css'
 import { Section, Container, Columns, Column, Table, Title } from 'bloomer'
 
-export default ({ scores }) => {
+export default ({ scores, highlightLatestScore }) => {
   let scoreboardRows
   if (scores.length !== 0) {
     const latestScore = scores.reduce((acc, score) => score.created_at > acc.created_at ? score : acc)
     const latestScoreIndex = scores.findIndex(score => score === latestScore)
     scoreboardRows = scores.map(
       ({ name, wpm }, i) => (
-        <tr key={i} className={i === latestScoreIndex ? 'is-selected' : undefined}>
+        <tr key={i} className={(highlightLatestScore && i === latestScoreIndex) ? 'is-selected' : undefined}>
           <td className="is-capitalized">{name}</td>
           <td>{wpm}</td>
         </tr>

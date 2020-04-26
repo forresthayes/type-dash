@@ -9,6 +9,7 @@ function App() {
 
   const [scores, setScores] = useState([])
   const [promptIndex, setPromptIndex] = useState(0)
+  const [highlightLatestScore, setHighlightLatestScore] = useState(false)
 
   useEffect(() => {
     const url = "/api/v1/scores/index"
@@ -33,10 +34,16 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/">
-            <Main goal={scoreToBeat} setScores={setScores} promptIndex={promptIndex} setPromptIndex={setPromptIndex} />
+            <Main
+              goal={scoreToBeat}
+              setScores={setScores}
+              promptIndex={promptIndex}
+              setPromptIndex={setPromptIndex}
+              setHighlightLatestScore={setHighlightLatestScore}
+            />
           </Route>
           <Route path="/high-scores">
-            <Scoreboard scores={scores} />
+            <Scoreboard scores={scores} highlightLatestScore={highlightLatestScore} />
           </Route>
         </Switch>
       </Router>
