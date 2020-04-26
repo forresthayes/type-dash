@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import 'bulma/css/bulma.css'
 import 'bulma-modal-fx/dist/css/modal-fx.min.css'
-import { Box, Modal, ModalBackground, ModalContent, Field, Label, Control, Button } from 'bloomer'
+import { Box, Modal, ModalBackground, ModalContent, Field, Label, Control, Button, Title } from 'bloomer'
 
 
 export default React.forwardRef(({ isActive, wpm, setScores, setIsWinner }, ref) => {
@@ -31,6 +31,7 @@ export default React.forwardRef(({ isActive, wpm, setScores, setIsWinner }, ref)
       <ModalBackground />
       <ModalContent>
         <Box>
+          <Title>Congrats, you set a new record!</Title>
           <Field>
             <Label>Name</Label>
             <Control>
@@ -42,7 +43,7 @@ export default React.forwardRef(({ isActive, wpm, setScores, setIsWinner }, ref)
               <Button isColor='primary' onClick={handleClick}>Submit</Button>
             </Control>
             <Control>
-              <Button isLink>Cancel</Button>
+              <Button isLink className="is-light">Cancel</Button>
             </Control>
           </Field>
         </Box>
