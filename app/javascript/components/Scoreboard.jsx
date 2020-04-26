@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import 'bulma/css/bulma.css'
-import { Section, Container, Columns, Column, Box, Table } from 'bloomer'
+import { Section, Container, Columns, Column, Table, Title } from 'bloomer'
 
 export default ({ scores }) => {
   let scoreboardRows
@@ -22,19 +22,18 @@ export default ({ scores }) => {
       <Container>
         <Columns isCentered>
           <Column isSize="1/2" className="is-narrow">
-            <Box>
-              <Table isBordered isStriped isFullWidth>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>WPM</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {scoreboardRows}
-                </tbody>
-              </Table>
-            </Box>
+            <Title className="is-capitalized">today's high scores</Title>
+            <Table isBordered isStriped isFullWidth>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>WPM</th>
+                </tr>
+              </thead>
+              <tbody>
+                {scoreboardRows}
+              </tbody>
+            </Table>
           </Column>
         </Columns>
       </Container>
