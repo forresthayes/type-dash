@@ -23,19 +23,7 @@ for (let i = 0; i < sonnetLines.length; i += 2) {
   couplets.push(sonnetLines.slice(i, i + 2).join('\n'))
 }
 
-const prompts = couplets.map(couplet => {
+export const prompts = couplets.map(couplet => {
   const [line1, line2] = couplet.split(/\n/)
   return <p>{line1}<br />{line2}</p>
 })
-
-export function* prompter() {
-  let i = 0
-  while (true) {
-    yield prompts[i]
-    if (i === prompts.length - 1) {
-      i = 0
-    } else {
-      i += 1
-    }
-  }
-}

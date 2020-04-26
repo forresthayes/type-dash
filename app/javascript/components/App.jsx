@@ -8,6 +8,7 @@ import Scoreboard from './Scoreboard'
 function App() {
 
   const [scores, setScores] = useState([])
+  const [promptIndex, setPromptIndex] = useState(0)
 
   useEffect(() => {
     const url = "/api/v1/scores/index"
@@ -32,7 +33,7 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/">
-            <Main goal={scoreToBeat} setScores={setScores} />
+            <Main goal={scoreToBeat} setScores={setScores} promptIndex={promptIndex} setPromptIndex={setPromptIndex} />
           </Route>
           <Route path="/high-scores">
             <Scoreboard scores={scores} />

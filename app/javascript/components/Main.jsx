@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { prompter } from '../helpers'
+import { prompts } from '../helpers'
 import 'bulma/css/bulma.css'
 import WarningModal from './WarningModal'
 import WinnerModal from './WinnerModal'
@@ -7,15 +7,13 @@ import { Container, Content, Column, Columns, Box, Field, Section, Modal, Button
 import Confetti from 'react-dom-confetti';
 
 
-export default ({ goal, setScores }) => {
+export default ({ goal, setScores, promptIndex, setPromptIndex }) => {
   const timeLimit = 5 // seconds
   // Progress intervals calibrate progress bar animation.
   const progressUpdateInterval = 15 // milliseconds
   const progressResetInterval = 2 // ms
   const maxTime = Math.floor(timeLimit * 1000 / progressUpdateInterval)
 
-  const [prompt, setPrompt] = useState('')
-  const [promptGen, setPromptGen] = useState(prompter())
   const [text, setText] = useState('')
   const [WPM, setWPM] = useState(0)
   const [isTimeRunning, setIsTimeRunning] = useState(false)
@@ -28,8 +26,6 @@ export default ({ goal, setScores }) => {
   const winnerNameInput = useRef(null)
 
   const startGame = () => {
-    setPrompt(promptGen.next().value)
-    setPromptGen(promptGen)
     setIsTimeRunning(true)
     inputEl.current.disabled = false
     setText('')
@@ -45,7 +41,7 @@ export default ({ goal, setScores }) => {
   useEffect(() => {
 
     const countWPM = (text) => {
-      const [line1, _, line2] = prompt.props.children
+      const [line1, _, line2] = prompts[promptIndex].props.children
       const promptText = [line1, line2].join('\n')
       const promptWords = promptText.split(/\s/)
       const wordsTyped = text.trim().split(/\s/)
@@ -82,6 +78,7 @@ export default ({ goal, setScores }) => {
       setIsTimeRunning(false)
       inputEl.current.onpaste = e => null
       countWPM(inputEl.current.value)
+      setPromptIndex(i => i === prompts.length - 1 ? 0 : i + 1)
     }
 
   }, [timeRemaining, isTimeRunning])
@@ -104,7 +101,7 @@ export default ({ goal, setScores }) => {
               <p>Press START and try your hand at Sonnet 29 by William Shakespeare.</p>
             </Content>
             <Box className="is-size-5" style={{ height: "6rem" }}>
-              {prompt}
+              {prompts[promptIndex]}
             </Box>
             <Field>
               <textarea
