@@ -117,8 +117,8 @@ export default ({ goal, setScores, promptIndex, setPromptIndex, setHighlightLate
               <WarningModal isActive={pasteWarning}></WarningModal>
               <WinnerModal
                 isActive={isWinner}
+                setIsActive={setIsWinner}
                 wpm={WPM}
-                setIsWinner={setIsWinner}
                 setScores={setScores}
                 ref={winnerNameInput}
               ></WinnerModal>
