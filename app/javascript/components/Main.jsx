@@ -27,6 +27,7 @@ export default ({ goal, setScores, promptIndex, setPromptIndex, setHighlightLate
 
   const startGame = () => {
     setIsTimeRunning(true)
+    setConfetti(false)
     inputEl.current.disabled = false
     setText('')
     inputEl.current.focus()
