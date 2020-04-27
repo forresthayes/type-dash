@@ -21,7 +21,7 @@ export default () => (
                 <span style={{ marginLeft: "1rem" }}><FontAwesomeIcon icon={faFlagCheckered} /></span>
               </Link>
             </Title>
-            <Subtitle hasTextColor="white">How many words can you type before time runs out...</Subtitle>
+            <Subtitle hasTextColor="white">How many words can you type before time runs out?</Subtitle>
           </Container>
         </HeroBody>
 
