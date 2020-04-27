@@ -61,9 +61,9 @@ export default ({ goal, setScores, promptIndex, setPromptIndex, setHighlightLate
 
       if (netWPM > goal) {
         setConfetti(true)
-        setTimeout(() => setIsWinner(true), 1500)
+        setTimeout(() => setIsWinner(true), 1400)
         setHighlightLatestScore(true)
-        setTimeout(() => winnerNameInput.current.focus(), 2000)
+        setTimeout(() => winnerNameInput.current.focus(), 1800)
       } else {
         setTimeout(() => startButton.current.focus(), 1000)
       }
