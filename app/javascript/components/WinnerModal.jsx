@@ -31,7 +31,7 @@ export default React.forwardRef(({ isActive, wpm, setScores, setIsActive }, ref)
       <ModalBackground />
       <ModalContent>
         <Box>
-          <Title>Congrats, you set a new record!</Title>
+          <Title hasTextAlign="centered" isSize={4}>Congrats, {wpm} WPM is a new high score!</Title>
           <Field>
             <Label>Name</Label>
             <Control>
