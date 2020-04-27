@@ -101,9 +101,9 @@ export default ({ goal, setScores, promptIndex, setPromptIndex, setHighlightLate
         <Columns isCentered>
           <Column isSize="1/2">
             <Content>
-              <p>Press START and try your hand at Sonnet 29 by William Shakespeare.</p>
+              <p className="is-size-5">Press START and try your hand at Sonnet 29 by William Shakespeare.</p>
             </Content>
-            <Box className="is-size-5" style={{ height: "6rem" }}>
+            <Box className="is-size-5">
               {prompts[promptIndex]}
             </Box>
             <Field>
