@@ -3,11 +3,11 @@
 #
 # Examples:
 #
-names = %w(Amir Betty Cindy)
+names = %w(Amir James Mary Jennifer John Lizzie Anna Thomas Lisa Daniel)
 
 names.each do |name|
   Score.create!(
     name: name,
-    wpm: rand(1..100)
+    wpm: rand(30..75)
     )
 end
