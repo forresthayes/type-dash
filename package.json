@@ -22,6 +22,11 @@
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
+  "engines": {
+    "yarn": "1.22.x",
+    "npm": "6.13.x",
+    "node": "13.5.x"
+  },
   "devDependencies": {
     "webpack-dev-server": "^3.10.3"
   }
