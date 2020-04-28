@@ -1,5 +1,4 @@
 class Api::V1::ScoresController < ApplicationController
-  protect_from_forgery with: :null_session
 
   def index
     render json: Score.high_scores

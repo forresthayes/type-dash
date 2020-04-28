@@ -12,9 +12,13 @@ export default React.forwardRef(({ isActive, wpm, setScores, setIsActive }, ref)
 
   const handleClick = () => {
     setIsActive(false)
+    const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': csrfToken
+      },
       body: JSON.stringify({ score: { name, wpm } })
     };
     fetch('/api/v1/scores/create', requestOptions)
