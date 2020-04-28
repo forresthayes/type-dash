@@ -21,6 +21,7 @@ export default ({ goal, setScores, promptIndex, setPromptIndex, setHighlightLate
   const [pasteWarning, setPasteWarning] = useState(false)
   const [isWinner, setIsWinner] = useState(false)
   const [confetti, setConfetti] = useState(false)
+  const [msg, setMsg] = useState('')
   const inputEl = useRef(null)
   const startButton = useRef(null)
   const winnerNameInput = useRef(null)
@@ -58,9 +59,11 @@ export default ({ goal, setScores, promptIndex, setPromptIndex, setHighlightLate
       const netWPM = Math.floor(correctWords / (timeLimit / 60))
 
       setWPM(netWPM)
+      console.log(goal, netWPM)
 
       if (netWPM > goal) {
         setConfetti(true)
+        setMsg(`Congrats, ${netWPM} WPM is a new high score!`)
         setTimeout(() => setIsWinner(true), 1400)
         setHighlightLatestScore(true)
         setTimeout(() => winnerNameInput.current.focus(), 1800)
@@ -119,6 +122,8 @@ export default ({ goal, setScores, promptIndex, setPromptIndex, setHighlightLate
               <WinnerModal
                 isActive={isWinner}
                 setIsActive={setIsWinner}
+                msg={msg}
+                setMsg={setMsg}
                 wpm={WPM}
                 setScores={setScores}
                 ref={winnerNameInput}

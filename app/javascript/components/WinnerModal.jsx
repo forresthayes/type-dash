@@ -5,13 +5,12 @@ import 'bulma-modal-fx/dist/css/modal-fx.min.css'
 import { Box, Modal, ModalBackground, ModalContent, Field, Label, Control, Button, Title } from 'bloomer'
 
 
-export default React.forwardRef(({ isActive, wpm, setScores, setIsActive }, ref) => {
+export default React.forwardRef(({ isActive, wpm, setScores, setIsActive, msg, setMsg }, ref) => {
   const [name, setName] = useState('')
   const handleChange = ({ target }) => setName(target.value)
   const history = useHistory()
 
   const handleClick = () => {
-    setIsActive(false)
     const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
     const requestOptions = {
       method: 'POST',
@@ -22,12 +21,18 @@ export default React.forwardRef(({ isActive, wpm, setScores, setIsActive }, ref)
       body: JSON.stringify({ score: { name, wpm } })
     };
     fetch('/api/v1/scores/create', requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setScores(data)
+      .then(resp => {
+        if (resp.ok) {
+          return resp.json()
+        }
+        throw new Error("Unable to save score. Please try again.")
       })
-    history.push("/high-scores")
+      .then(data => {
+        setScores(data)
+        setIsActive(false)
+        history.push("/high-scores")
+      })
+      .catch(reason => setMsg(`Error: ${reason.message}. Please try again.`))
   }
 
   return (
@@ -35,7 +40,7 @@ export default React.forwardRef(({ isActive, wpm, setScores, setIsActive }, ref)
       <ModalBackground />
       <ModalContent>
         <Box>
-          <Title hasTextAlign="centered" isSize={4}>Congrats, {wpm} WPM is a new high score!</Title>
+          <Title hasTextAlign="centered" isSize={4}>{msg}</Title>
           <Field>
             <Label>Name</Label>
             <Control>
