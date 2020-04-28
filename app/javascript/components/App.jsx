@@ -18,7 +18,7 @@ function App() {
         if (resp.ok) {
           return resp.json()
         }
-        throw new Error("We have a problem.")
+        throw new Error("Unable to load high scores.")
       })
       .then(data => {
         setScores(data)
@@ -26,7 +26,10 @@ function App() {
       .catch((reason) => console.error(reason.message))
   }, [])
 
-  const scoreToBeat = Math.min(...scores.map(({ wpm }) => wpm))
+  let scoreToBeat = 0
+  if (scores.length !== 0) {
+    scoreToBeat = Math.min(...scores.map(({ wpm }) => wpm))
+  }
 
   return (
     <>

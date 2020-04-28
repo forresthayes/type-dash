@@ -3,7 +3,8 @@ import 'bulma/css/bulma.css'
 import { Section, Container, Columns, Column, Table, Title } from 'bloomer'
 
 export default ({ scores, highlightLatestScore }) => {
-  let scoreboardRows
+  let scoreboardRows = <tr><td colSpan={2} className="has-text-centered">No scores available</td></tr>
+
   if (scores.length !== 0) {
     const latestScore = scores.reduce((acc, score) => score.created_at > acc.created_at ? score : acc)
     const latestScoreIndex = scores.findIndex(score => score === latestScore)
