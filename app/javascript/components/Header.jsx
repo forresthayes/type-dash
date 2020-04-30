@@ -29,7 +29,7 @@ export default () => (
           <Tabs isBoxed>
             <Container>
               <TabList isAlign="right">
-                <Tab className="is-uppercase"><Link to="/">home</Link></Tab>
+                <Tab className="is-uppercase"><Link to="/">play</Link></Tab>
                 <Tab className="is-uppercase"><Link to="/high-scores">high scores</Link></Tab>
               </TabList>
             </Container>
