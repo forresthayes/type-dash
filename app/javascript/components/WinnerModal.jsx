@@ -7,10 +7,12 @@ import { Box, Modal, ModalBackground, ModalContent, Field, Label, Control, Butto
 
 export default React.forwardRef(({ isActive, wpm, setScores, setIsActive, msg, setMsg }, ref) => {
   const [name, setName] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const handleChange = ({ target }) => setName(target.value)
   const history = useHistory()
 
   const handleClick = () => {
+    setIsSubmitting(true)
     const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
     const requestOptions = {
       method: 'POST',
@@ -29,10 +31,14 @@ export default React.forwardRef(({ isActive, wpm, setScores, setIsActive, msg, s
       })
       .then(data => {
         setScores(data)
+        setIsSubmitting(false)
         setIsActive(false)
         history.push("/high-scores")
       })
-      .catch(reason => setMsg(`Error: ${reason.message}. Please try again.`))
+      .catch(reason => {
+        setMsg(`Error: ${reason.message}. Please try again.`)
+        setIsSubmitting(false)
+      })
   }
 
   return (
@@ -49,7 +55,13 @@ export default React.forwardRef(({ isActive, wpm, setScores, setIsActive, msg, s
           </Field>
           <Field isGrouped>
             <Control>
-              <Button isColor='primary' onClick={handleClick}>Submit</Button>
+              <Button
+                disabled={isSubmitting}
+                isLoading={isSubmitting}
+                className={isSubmitting ? 'Disabled' : undefined}
+                isColor="primary"
+                onClick={handleClick}
+              >Submit</Button>
             </Control>
             <Control>
               <Button isLink className="is-light" onClick={() => setIsActive(false)}>Cancel</Button>
