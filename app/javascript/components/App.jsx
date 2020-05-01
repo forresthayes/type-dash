@@ -12,18 +12,11 @@ function App() {
   const [highlightLatestScore, setHighlightLatestScore] = useState(false)
 
   useEffect(() => {
-    const url = "/api/v1/scores/index"
-    fetch(url)
+    fetch("/api/v1/scores/index")
       .then(resp => {
-        if (resp.ok) {
-          return resp.json()
-        }
-        throw new Error("Unable to load high scores.")
+        return resp.ok ? resp.json() : []
       })
-      .then(data => {
-        setScores(data)
-      })
-      .catch((reason) => console.error(reason.message))
+      .then(data => setScores(data))
   }, [])
 
   let scoreToBeat = 0
