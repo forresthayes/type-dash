@@ -59,7 +59,6 @@ export default ({ goal, setScores, promptIndex, setPromptIndex, setHighlightLate
       const netWPM = Math.floor(correctWords / (timeLimit / 60))
 
       setWPM(netWPM)
-      console.log(goal, netWPM)
 
       if (netWPM > goal) {
         setConfetti(true)

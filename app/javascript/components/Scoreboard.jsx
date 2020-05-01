@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import 'bulma/css/bulma.css'
 import { Section, Container, Columns, Column, Table, Title } from 'bloomer'
 
