@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import 'bulma/css/bulma.css'
 import Header from './Header'
 import Main from './Main'
@@ -26,23 +26,21 @@ function App() {
 
   return (
     <>
-      <Router>
-        <Header />
-        <Switch>
-          <Route exact path="/">
-            <Main
-              goal={scoreToBeat}
-              setScores={setScores}
-              promptIndex={promptIndex}
-              setPromptIndex={setPromptIndex}
-              setHighlightLatestScore={setHighlightLatestScore}
-            />
-          </Route>
-          <Route path="/high-scores">
-            <Scoreboard scores={scores} highlightLatestScore={highlightLatestScore} />
-          </Route>
-        </Switch>
-      </Router>
+      <Header />
+      <Switch>
+        <Route exact path="/">
+          <Main
+            goal={scoreToBeat}
+            setScores={setScores}
+            promptIndex={promptIndex}
+            setPromptIndex={setPromptIndex}
+            setHighlightLatestScore={setHighlightLatestScore}
+          />
+        </Route>
+        <Route path="/high-scores">
+          <Scoreboard scores={scores} highlightLatestScore={highlightLatestScore} />
+        </Route>
+      </Switch>
     </>
   );
 }
