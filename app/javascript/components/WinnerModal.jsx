@@ -8,7 +8,7 @@ import { Box, Modal, ModalBackground, ModalContent, Field, Label, Control, Butto
 export default React.forwardRef(({ isActive, wpm, setScores, setIsActive, msg, setMsg }, ref) => {
   const [name, setName] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const handleChange = ({ target }) => setName(target.value)
+  const handleChange = ({ target }) => setName(target.value.trim())
   const history = useHistory()
 
   const handleClick = () => {
@@ -56,7 +56,7 @@ export default React.forwardRef(({ isActive, wpm, setScores, setIsActive, msg, s
           <Field isGrouped>
             <Control>
               <Button
-                disabled={isSubmitting}
+                disabled={isSubmitting || !name.match(/\w+/)}
                 isLoading={isSubmitting}
                 className={isSubmitting ? 'Disabled' : undefined}
                 isColor="primary"
