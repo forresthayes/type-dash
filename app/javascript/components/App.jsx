@@ -19,9 +19,9 @@ function App() {
       .then(data => setScores(data))
   }, [])
 
-  let scoreToBeat = 0
+  let goal = 0
   if (scores.length !== 0) {
-    scoreToBeat = Math.min(...scores.map(({ wpm }) => wpm))
+    goal = Math.min(...scores.map(({ wpm }) => wpm))
   }
 
   return (
@@ -30,15 +30,17 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Main
-            goal={scoreToBeat}
-            setScores={setScores}
-            promptIndex={promptIndex}
-            setPromptIndex={setPromptIndex}
-            setHighlightLatestScore={setHighlightLatestScore}
+            {...{
+              goal,
+              setScores,
+              promptIndex,
+              setPromptIndex,
+              setHighlightLatestScore
+            }}
           />
         </Route>
         <Route path="/high-scores">
-          <Scoreboard scores={scores} highlightLatestScore={highlightLatestScore} />
+          <Scoreboard {...{ scores, highlightLatestScore }} />
         </Route>
       </Switch>
     </>
