@@ -17,7 +17,7 @@ export default () => (
           <Container style={{ paddingTop: "1.5rem" }}>
             <Title isSize={1}>
               <Link to="/" style={{ color: "white" }}>
-                Speed Typer
+                Type Dash
                 <span style={{ marginLeft: "1rem" }}><FontAwesomeIcon icon={faFlagCheckered} /></span>
               </Link>
             </Title>
